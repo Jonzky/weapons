@@ -138,6 +138,7 @@ public Action ChatListener(int client, const char[] command, int args)
 		{
 			g_iWeaponSeed[client][g_iIndex[client]] = currentSeed + 1;
 			PrintToChat(client, " New seed value is: %i", currentSeed+1);
+			RefreshWeapon(client, g_iIndex[client]);
 			return Plugin_Handled;
 		}
 		else if (StrEqual(msg, "previousseed") || StrEqual(msg, "prev"))
@@ -150,6 +151,7 @@ public Action ChatListener(int client, const char[] command, int args)
 			}
 			g_iWeaponSeed[client][g_iIndex[client]] = currentSeed - 1;
 			PrintToChat(client, " New seed value is: %i", currentSeed-1);
+			RefreshWeapon(client, g_iIndex[client]);
 			return Plugin_Handled;
 		}
 					
