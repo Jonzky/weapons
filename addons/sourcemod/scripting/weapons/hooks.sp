@@ -128,8 +128,35 @@ public Action ChatListener(int client, const char[] command, int args)
 		PrintToChat(client, " %s \x04%t: \x01%i", g_ChatPrefix, "SeedSuccess", seedInt);
 		
 		return Plugin_Handled;
+	}	
+	else if (IsValidClient(client) && g_iIndex[client] > -1 && !IsChatTrigger())
+	{
+		
+		int currentSeed = g_iWeaponSeed[client][g_iIndex[client]];
+
+		if (StrEqual(msg, "nextseed") || StrEqual(msg, "next"))
+		{
+			g_iWeaponSeed[client][g_iIndex[client]] = currentSeed + 1;
+			PrintToChat(client, " New seed value is: %i", currentSeed+1);
+			return Plugin_Handled;
+		}
+		else if (StrEqual(msg, "previousseed") || StrEqual(msg, "prev"))
+
+		{
+			if (currentSeed == 0) 
+			{
+				PrintToChat(client, " Seed value can not be less than 0");
+				return Plugin_Handled;
+			}
+			g_iWeaponSeed[client][g_iIndex[client]] = currentSeed - 1;
+			PrintToChat(client, " New seed value is: %i", currentSeed-1);
+			return Plugin_Handled;
+		}
+					
+		return Plugin_Handled;
 	}
 	
+
 	return Plugin_Continue;
 }
 
